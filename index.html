@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover, interactive-widget=resizes-content">
     <title>ORVIA - L'IA qui crée des applications</title>
     <style>
         * {
@@ -16,6 +16,8 @@
             background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
             color: white;
+            overflow: hidden;
+            height: 100vh;
         }
 
         /* ========== ANIMATIONS ========== */
@@ -29,86 +31,83 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        /* ========== CONTAINER ========== */
+        /* ========== CONTAINER PRINCIPAL - FORMAT 16:9 ========== */
         .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 16px;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            position: relative;
         }
 
-        /* ========== HEADER ========== */
+        /* ========== HEADER - COMPACT ========== */
         .header {
             text-align: center;
-            margin-bottom: 20px;
-            animation: fadeIn 0.6s ease;
+            margin-bottom: 8px;
             flex-shrink: 0;
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 800;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block;
         }
 
         .tagline {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-top: 4px;
+            font-size: 0.7rem;
+            opacity: 0.7;
         }
 
         .learning-badge {
             background: rgba(74, 222, 128, 0.2);
             border: 1px solid #4ade80;
-            border-radius: 20px;
-            padding: 3px 10px;
-            font-size: 0.65rem;
+            border-radius: 16px;
+            padding: 2px 8px;
+            font-size: 0.55rem;
             display: inline-block;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
-        /* ========== AGENTS GRID - COMPACT ========== */
+        /* ========== AGENTS - TRÈS COMPACTS ========== */
         .agents-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 6px;
+            margin-bottom: 10px;
             flex-shrink: 0;
         }
 
         .agent-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 8px 4px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 4px 2px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.2s;
         }
 
         .agent-icon {
-            font-size: 1.3rem;
+            font-size: 1rem;
         }
 
         .agent-name {
-            font-size: 0.7rem;
+            font-size: 0.55rem;
             font-weight: 600;
-            margin: 3px 0 1px;
+            margin: 2px 0 0;
         }
 
         .agent-role {
-            font-size: 0.55rem;
-            opacity: 0.7;
+            display: none;
         }
 
         .agent-status {
-            margin-top: 4px;
-            font-size: 0.6rem;
+            margin-top: 2px;
+            font-size: 0.5rem;
             font-weight: 500;
         }
 
@@ -121,71 +120,69 @@
             50% { opacity: 0.6; }
         }
 
-        /* ========== MAIN LAYOUT - FLEX COLUMN SUR MOBILE ========== */
+        /* ========== LAYOUT PRINCIPAL ========== */
         .main-layout {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             flex: 1;
             min-height: 0;
+            overflow: hidden;
         }
 
-        /* ========== CHAT PANEL - TRÈS GRAND SUR MOBILE ========== */
+        /* ========== CHAT PANEL ========== */
         .chat-panel {
+            flex: 2;
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            flex: 2;
-            min-height: 0;
+            overflow: hidden;
         }
 
         .chat-header {
-            padding: 14px 16px;
+            padding: 10px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             flex-shrink: 0;
         }
 
         .chat-header h2 {
-            font-size: 1rem;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .header-buttons {
             display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 5px;
         }
 
         .header-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             border: none;
-            padding: 5px 10px;
-            border-radius: 18px;
+            padding: 4px 8px;
+            border-radius: 16px;
             color: white;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        /* ========== MESSAGES - ZONE TRÈS GRANDE ========== */
+        /* ========== ZONE MESSAGES - SCROLLABLE ========== */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            min-height: 0;
+            gap: 10px;
         }
 
         .message {
@@ -199,40 +196,40 @@
         .user-message .bubble {
             background: linear-gradient(135deg, #667eea, #764ba2);
             display: inline-block;
-            padding: 12px 18px;
-            border-radius: 24px;
-            max-width: 90%;
-            font-size: 0.95rem;
+            padding: 8px 14px;
+            border-radius: 20px;
+            max-width: 85%;
+            font-size: 0.85rem;
             text-align: left;
         }
 
         .orvia-message .bubble {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             display: inline-block;
-            padding: 12px 18px;
-            border-radius: 24px;
-            max-width: 90%;
-            font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 20px;
+            max-width: 85%;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* ========== CHAT INPUT - FIXE EN BAS ========== */
+        /* ========== INPUT FIXE EN BAS - GÈRE LE CLAVIER ========== */
         .chat-input {
-            padding: 14px 16px;
+            padding: 10px 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 0 0 24px 24px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .chat-input input {
             flex: 1;
-            padding: 14px 18px;
-            border-radius: 30px;
+            padding: 10px 14px;
+            border-radius: 25px;
             border: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             background: rgba(255, 255, 255, 0.95);
             outline: none;
         }
@@ -241,77 +238,76 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 14px 22px;
-            border-radius: 30px;
+            padding: 10px 18px;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             transition: all 0.2s;
         }
 
-        /* ========== MISSION PANEL - PLUS PETIT SUR MOBILE ========== */
+        /* ========== MISSION PANEL ========== */
         .mission-panel {
+            flex: 1.2;
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            flex: 1;
-            min-height: 200px;
+            overflow: hidden;
         }
 
         .mission-header {
-            padding: 12px 16px;
+            padding: 8px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             flex-shrink: 0;
         }
 
         .mission-header h2 {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .mission-log {
             flex: 1;
             overflow-y: auto;
-            padding: 12px 16px;
+            padding: 8px 10px;
             font-family: monospace;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         .log-entry {
-            padding: 6px 0;
-            border-left: 3px solid #667eea;
-            padding-left: 10px;
-            margin-bottom: 6px;
+            padding: 4px 0;
+            border-left: 2px solid #667eea;
+            padding-left: 8px;
+            margin-bottom: 4px;
             animation: fadeIn 0.2s ease;
         }
 
         .file-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            padding: 10px 16px;
+            gap: 4px;
+            padding: 6px 10px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             flex-shrink: 0;
         }
 
         .file-badge {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 3px 8px;
-            border-radius: 16px;
-            font-size: 0.65rem;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.55rem;
             font-family: monospace;
         }
 
         .action-buttons {
-            padding: 10px 16px;
+            padding: 8px 10px;
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 8px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             flex-shrink: 0;
         }
@@ -319,11 +315,11 @@
         .btn-download, .btn-preview {
             flex: 1;
             border: none;
-            padding: 10px;
-            border-radius: 25px;
+            padding: 6px;
+            border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         .btn-download {
@@ -336,185 +332,187 @@
             color: #1a1a2e;
         }
 
-        /* ========== RESPONSIVE MOBILE - CHAT TRÈS GRAND ========== */
+        /* ========== RESPONSIVE - FORMAT 16:9 ET MOBILE ========== */
+        @media (max-width: 1024px) {
+            .app-container {
+                padding: 8px 12px;
+            }
+            
+            .main-layout {
+                gap: 10px;
+            }
+        }
+
         @media (max-width: 768px) {
             .app-container {
-                padding: 12px;
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
+                padding: 6px 10px;
             }
 
             .agents-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
+                gap: 5px;
             }
 
             .agent-card {
-                padding: 6px 3px;
+                padding: 3px 2px;
             }
 
             .agent-icon {
-                font-size: 1.1rem;
+                font-size: 0.9rem;
             }
 
             .agent-name {
-                font-size: 0.6rem;
+                font-size: 0.5rem;
             }
 
             .main-layout {
-                flex: 1;
-                gap: 12px;
-                min-height: 0;
+                flex-direction: column;
+                gap: 8px;
             }
 
-            /* CHAT TRÈS GRAND */
             .chat-panel {
                 flex: 3;
-                min-height: 0;
+            }
+
+            .mission-panel {
+                flex: 1.2;
+                min-height: 140px;
             }
 
             .chat-header {
-                padding: 10px 12px;
+                padding: 8px 10px;
             }
 
             .chat-header h2 {
-                font-size: 0.9rem;
+                font-size: 0.75rem;
             }
 
             .header-btn {
-                padding: 4px 8px;
-                font-size: 0.6rem;
+                padding: 3px 6px;
+                font-size: 0.55rem;
             }
 
             .chat-messages {
-                padding: 12px;
-                gap: 10px;
+                padding: 8px;
+                gap: 8px;
             }
 
             .user-message .bubble, .orvia-message .bubble {
-                max-width: 95%;
-                padding: 10px 14px;
-                font-size: 0.9rem;
+                max-width: 90%;
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
 
             .chat-input {
-                padding: 10px 12px;
+                padding: 8px 10px;
             }
 
             .chat-input input {
-                padding: 12px 16px;
-                font-size: 0.95rem;
+                padding: 8px 12px;
+                font-size: 0.85rem;
             }
 
             .chat-input button {
-                padding: 12px 18px;
-                font-size: 0.9rem;
-            }
-
-            /* MISSION PANEL PLUS PETIT */
-            .mission-panel {
-                flex: 1.2;
-                min-height: 180px;
+                padding: 8px 14px;
+                font-size: 0.8rem;
             }
 
             .mission-header {
-                padding: 8px 12px;
+                padding: 6px 10px;
+            }
+
+            .mission-header h2 {
+                font-size: 0.7rem;
             }
 
             .mission-log {
-                padding: 8px 12px;
-                font-size: 0.65rem;
+                padding: 6px 8px;
+                font-size: 0.6rem;
             }
 
             .log-entry {
-                padding: 4px 0;
-                padding-left: 8px;
+                padding: 3px 0;
+                padding-left: 6px;
+            }
+
+            .action-buttons {
+                padding: 6px 8px;
+            }
+
+            .btn-download, .btn-preview {
+                padding: 5px;
+                font-size: 0.65rem;
             }
         }
 
         @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .tagline {
+                font-size: 0.6rem;
+            }
+            
             .agents-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .logo {
-                font-size: 1.6rem;
-            }
-
+            
             .user-message .bubble, .orvia-message .bubble {
-                font-size: 0.85rem;
-                padding: 8px 12px;
-            }
-
-            .chat-input input {
-                padding: 10px 14px;
-                font-size: 0.9rem;
-            }
-
-            .chat-input button {
-                padding: 10px 14px;
-                font-size: 0.85rem;
+                font-size: 0.75rem;
+                padding: 6px 10px;
             }
         }
 
-        /* Pour les très petits écrans */
-        @media (max-width: 380px) {
-            .agent-name {
-                font-size: 0.55rem;
+        /* Pour éviter que le clavier cache l'input */
+        @media (max-width: 768px) {
+            .app-container {
+                padding-bottom: env(safe-area-inset-bottom, 12px);
             }
-
-            .agent-role {
-                display: none;
-            }
-
-            .agent-status {
-                font-size: 0.55rem;
-            }
-
-            .chat-header h2 {
-                font-size: 0.8rem;
+            
+            .chat-input {
+                padding-bottom: max(8px, env(safe-area-inset-bottom));
             }
         }
 
-        /* Scrollbar */
+        /* Scrollbar personnalisée */
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- HEADER -->
+        <!-- HEADER COMPACT -->
         <div class="header">
             <div class="logo">⚡ ORVIA</div>
-            <div class="tagline">L'intelligence qui voit au-delà du code</div>
-            <div class="learning-badge" id="learningBadge">🧠 Apprentissage en cours...</div>
+            <div class="tagline">L'intelligence qui crée des applications</div>
+            <div class="learning-badge" id="learningBadge">🧠 Apprentissage</div>
         </div>
 
-        <!-- AGENTS COMPACTS -->
+        <!-- AGENTS TRÈS COMPACTS -->
         <div class="agents-grid">
-            <div class="agent-card"><div class="agent-icon">🔮</div><div class="agent-name">VISION</div><div class="agent-role">Stratège</div><div class="agent-status online" id="visionStatus">Prêt</div></div>
-            <div class="agent-card"><div class="agent-icon">✨</div><div class="agent-name">ARTISAN</div><div class="agent-role">Codeur</div><div class="agent-status online" id="artisanStatus">Prêt</div></div>
-            <div class="agent-card"><div class="agent-icon">🛡️</div><div class="agent-name">SENTINEL</div><div class="agent-role">Sécurité</div><div class="agent-status online" id="sentinelStatus">Prêt</div></div>
-            <div class="agent-card"><div class="agent-icon">⚖️</div><div class="agent-name">JUDGE</div><div class="agent-role">Validateur</div><div class="agent-status online" id="judgeStatus">Prêt</div></div>
-            <div class="agent-card"><div class="agent-icon">🎨</div><div class="agent-name">DESIGNER</div><div class="agent-role">UI/UX</div><div class="agent-status online" id="designerStatus">Prêt</div></div>
-            <div class="agent-card"><div class="agent-icon">🧠</div><div class="agent-name">MÉMOIRE</div><div class="agent-role">Souvenirs</div><div class="agent-status online" id="memoryStatus">Actif</div></div>
+            <div class="agent-card"><div class="agent-icon">🔮</div><div class="agent-name">VISION</div><div class="agent-status online" id="visionStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">✨</div><div class="agent-name">ARTISAN</div><div class="agent-status online" id="artisanStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">🛡️</div><div class="agent-name">SENTINEL</div><div class="agent-status online" id="sentinelStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">⚖️</div><div class="agent-name">JUDGE</div><div class="agent-status online" id="judgeStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">🎨</div><div class="agent-name">DESIGNER</div><div class="agent-status online" id="designerStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">🧠</div><div class="agent-name">MÉMOIRE</div><div class="agent-status online" id="memoryStatus">Actif</div></div>
         </div>
 
         <!-- MAIN LAYOUT -->
         <div class="main-layout">
-            <!-- CHAT PANEL - TRÈS GRAND -->
+            <!-- CHAT PANEL -->
             <div class="chat-panel">
                 <div class="chat-header">
                     <h2>💬 Discussion</h2>
@@ -525,7 +523,7 @@
                     </div>
                 </div>
                 <div class="chat-messages" id="chatMessages">
-                    <div class="message orvia-message"><div class="bubble">🧠 Bonjour ! Je suis ORVIA. Dis-moi ce que tu veux créer !<br><br>💡 Astuce : /generate [idée] pour créer une application<br>🧠 Clique sur MÉMOIRE pour voir tes projets<br>🎨 Clique sur TEMPLATES pour des modèles</div></div>
+                    <div class="message orvia-message"><div class="bubble">🧠 Bonjour ! Je suis ORVIA. Dis-moi ce que tu veux créer !<br><br>💡 /generate [idée] - Créer une application<br>🧠 Clique sur MÉMOIRE pour voir tes projets<br>🎨 Clique sur TEMPLATES pour des modèles</div></div>
                 </div>
                 <div class="chat-input">
                     <input type="text" id="messageInput" placeholder="Parle avec ORVIA..." onkeypress="if(event.key==='Enter') sendMessage()">
@@ -551,7 +549,6 @@
     <script>
         const API_URL = 'https://web-production-71a1d.up.railway.app';
         let currentProjectId = null;
-        let currentProjectFiles = null;
         let waitingConfirmation = false;
         let pendingIdea = null;
 
@@ -584,23 +581,19 @@
                 const response = await fetch(API_URL + '/api/projects');
                 const data = await response.json();
                 const projects = data.projects;
-                
                 if (projects.length === 0) {
-                    addChatMessage("📭 Tu n'as pas encore créé de projet. Utilise /generate pour en créer un !", false);
+                    addChatMessage("📭 Aucun projet. Utilise /generate pour en créer un !", false);
                     return;
                 }
-                
                 let message = "🧠 **Tes projets :**\n\n";
                 for (let i = 0; i < Math.min(projects.length, 5); i++) {
                     const p = projects[i];
-                    message += `**${i+1}. ${p.idea.substring(0, 50)}**\n`;
-                    message += `   🆔 ID: ${p.id}\n`;
-                    message += `   📅 ${new Date(p.created_at).toLocaleString()}\n\n`;
+                    message += `**${i+1}. ${p.idea.substring(0, 50)}**\n🆔 ${p.id}\n📅 ${new Date(p.created_at).toLocaleString()}\n\n`;
                 }
                 message += "💡 Pour continuer: /continue [ID]";
                 addChatMessage(message, false);
             } catch(e) {
-                addChatMessage("❌ Erreur lors du chargement des projets", false);
+                addChatMessage("❌ Erreur", false);
             }
         }
 
@@ -608,13 +601,9 @@
             try {
                 const response = await fetch(API_URL + '/api/templates');
                 const data = await response.json();
-                const templates = data.templates;
-                
                 let message = "🎨 **Templates :**\n\n";
-                for (let i = 0; i < templates.length; i++) {
-                    const t = templates[i];
-                    message += `**${t.name}** - ${t.description}\n`;
-                    message += `💡 /template ${t.id}\n\n`;
+                for (const t of data.templates) {
+                    message += `**${t.name}** - ${t.description}\n💡 /template ${t.id}\n\n`;
                 }
                 addChatMessage(message, false);
             } catch(e) {
@@ -623,7 +612,7 @@
         }
 
         async function showLearnPanel() {
-            addChatMessage("🌐 **Apprentissage ORVIA**\n\n• /learn trends design - Tendances design\n• /learn analyze [url] - Analyser un site\n• /learn recommend [type] - Recommandations\n• /learn text [texte] - Apprendre un texte", false);
+            addChatMessage("🌐 **Apprentissage ORVIA**\n\n• /learn trends design\n• /learn analyze [url]\n• /learn recommend [type]\n• /learn text [texte]", false);
         }
 
         async function createApp(idea) {
@@ -631,25 +620,18 @@
             document.getElementById('fileList').innerHTML = '';
             document.getElementById('actionButtons').style.display = 'none';
             
-            updateAgentStatus('vision', 'Analyse...', 'working');
-            updateAgentStatus('artisan', 'Attente...', 'working');
-            updateAgentStatus('sentinel', 'Attente...', 'working');
-            updateAgentStatus('judge', 'Attente...', 'working');
-            updateAgentStatus('designer', 'Attente...', 'working');
-            updateAgentStatus('memory', 'Attente...', 'working');
+            ['vision', 'artisan', 'sentinel', 'judge', 'designer', 'memory'].forEach(a => updateAgentStatus(a, '...', 'working'));
 
             try {
                 const response = await fetch(API_URL + '/api/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ idea: idea })
+                    body: JSON.stringify({ idea })
                 });
                 const data = await response.json();
 
                 if (data.success) {
                     currentProjectId = data.project_id;
-                    currentProjectFiles = data.files;
-                    
                     addMissionLog('VISION', 'Planification', data.steps?.vision || 'Plan créé', '🔮');
                     addMissionLog('DESIGNER', 'UI/UX', data.steps?.designer || 'Design appliqué', '🎨');
                     addMissionLog('ARTISAN', 'Codage', data.steps?.artisan || 'Fichiers créés', '✨');
@@ -669,34 +651,20 @@
                     }
                     
                     document.getElementById('actionButtons').style.display = 'flex';
+                    addChatMessage(`✅ Application créée !\n📁 ${Object.keys(data.files).length} fichiers\n🆔 ID: ${currentProjectId}`, false);
                     
-                    addChatMessage(`✅ Application créée !\n\n📁 ${Object.keys(data.files).length} fichiers générés.\n🆔 ID: ${currentProjectId}`, false);
-                    
-                    updateAgentStatus('vision', '✅', 'online');
-                    updateAgentStatus('artisan', '✅', 'online');
-                    updateAgentStatus('sentinel', '✅', 'online');
-                    updateAgentStatus('judge', '✅', 'online');
-                    updateAgentStatus('designer', '✅', 'online');
-                    updateAgentStatus('memory', '✅', 'online');
+                    ['vision', 'artisan', 'sentinel', 'judge', 'designer', 'memory'].forEach(a => updateAgentStatus(a, '✅', 'online'));
                 } else {
                     addChatMessage(`❌ Erreur : ${data.error}`, false);
-                    updateAgentStatus('vision', '❌', 'error');
-                    updateAgentStatus('artisan', '❌', 'error');
-                    updateAgentStatus('sentinel', '❌', 'error');
-                    updateAgentStatus('judge', '❌', 'error');
-                    updateAgentStatus('designer', '❌', 'error');
-                    updateAgentStatus('memory', '❌', 'error');
+                    ['vision', 'artisan', 'sentinel', 'judge', 'designer', 'memory'].forEach(a => updateAgentStatus(a, '❌', 'error'));
                 }
             } catch (error) {
-                addChatMessage('❌ Erreur de connexion au serveur', false);
+                addChatMessage('❌ Erreur de connexion', false);
             }
         }
 
         async function downloadProject() {
-            if (!currentProjectId) {
-                addChatMessage("Aucun projet à télécharger.", false);
-                return;
-            }
+            if (!currentProjectId) return;
             window.open(API_URL + '/api/download/' + currentProjectId, '_blank');
         }
 
@@ -730,7 +698,7 @@
                 const response = await fetch(API_URL + '/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ message })
                 });
                 const data = await response.json();
 
