@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>ORVIA - L'IA qui crée des applications</title>
     <style>
         * {
@@ -24,11 +24,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.98); }
-        }
-
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
@@ -38,18 +33,22 @@
         .app-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* ========== HEADER ========== */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             animation: fadeIn 0.6s ease;
+            flex-shrink: 0;
         }
 
         .logo {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
@@ -58,63 +57,58 @@
         }
 
         .tagline {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.8;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
         .learning-badge {
             background: rgba(74, 222, 128, 0.2);
             border: 1px solid #4ade80;
             border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.7rem;
+            padding: 3px 10px;
+            font-size: 0.65rem;
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         /* ========== AGENTS GRID - COMPACT ========== */
         .agents-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-shrink: 0;
         }
 
         .agent-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 10px 5px;
+            border-radius: 12px;
+            padding: 8px 4px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.2s;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .agent-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.2);
         }
 
         .agent-icon {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .agent-name {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin: 4px 0 2px;
+            margin: 3px 0 1px;
         }
 
         .agent-role {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             opacity: 0.7;
         }
 
         .agent-status {
-            margin-top: 5px;
-            font-size: 0.65rem;
+            margin-top: 4px;
+            font-size: 0.6rem;
             font-weight: 500;
         }
 
@@ -122,73 +116,76 @@
         .agent-status.working { color: #fbbf24; animation: pulse 1s infinite; }
         .agent-status.error { color: #f87171; }
 
-        /* ========== MAIN LAYOUT ========== */
-        .main-layout {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
-        /* ========== CHAT PANEL - PLUS GRAND ========== */
+        /* ========== MAIN LAYOUT - FLEX COLUMN SUR MOBILE ========== */
+        .main-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* ========== CHAT PANEL - TRÈS GRAND SUR MOBILE ========== */
         .chat-panel {
-            flex: 3;
-            min-width: 250px;
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
-            border-radius: 28px;
+            border-radius: 24px;
             display: flex;
             flex-direction: column;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            height: 550px;
+            flex: 2;
+            min-height: 0;
         }
 
         .chat-header {
-            padding: 18px 20px;
+            padding: 14px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .chat-header h2 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .header-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .header-btn {
             background: rgba(255, 255, 255, 0.15);
             border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            border-radius: 18px;
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .header-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        /* ========== MESSAGES ========== */
+        /* ========== MESSAGES - ZONE TRÈS GRANDE ========== */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 15px 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            min-height: 0;
         }
 
         .message {
@@ -202,37 +199,41 @@
         .user-message .bubble {
             background: linear-gradient(135deg, #667eea, #764ba2);
             display: inline-block;
-            padding: 10px 16px;
-            border-radius: 22px;
-            max-width: 85%;
-            font-size: 0.9rem;
+            padding: 12px 18px;
+            border-radius: 24px;
+            max-width: 90%;
+            font-size: 0.95rem;
+            text-align: left;
         }
 
         .orvia-message .bubble {
             background: rgba(255, 255, 255, 0.15);
             display: inline-block;
-            padding: 10px 16px;
-            border-radius: 22px;
-            max-width: 85%;
-            font-size: 0.9rem;
+            padding: 12px 18px;
+            border-radius: 24px;
+            max-width: 90%;
+            font-size: 0.95rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* ========== CHAT INPUT ========== */
+        /* ========== CHAT INPUT - FIXE EN BAS ========== */
         .chat-input {
-            padding: 15px 20px;
+            padding: 14px 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
             gap: 10px;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 24px 24px;
         }
 
         .chat-input input {
             flex: 1;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 30px;
             border: none;
-            font-size: 0.9rem;
-            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.95);
             outline: none;
         }
 
@@ -240,81 +241,79 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 22px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.95rem;
             transition: all 0.2s;
         }
 
-        .chat-input button:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
-        }
-
-        /* ========== MISSION PANEL ========== */
+        /* ========== MISSION PANEL - PLUS PETIT SUR MOBILE ========== */
         .mission-panel {
-            flex: 2;
-            min-width: 250px;
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
-            border-radius: 28px;
+            border-radius: 24px;
             display: flex;
             flex-direction: column;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            height: 550px;
+            flex: 1;
+            min-height: 200px;
         }
 
         .mission-header {
-            padding: 18px 20px;
+            padding: 12px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
         }
 
         .mission-header h2 {
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .mission-log {
             flex: 1;
             overflow-y: auto;
-            padding: 15px 20px;
+            padding: 12px 16px;
             font-family: monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         .log-entry {
-            padding: 8px 0;
+            padding: 6px 0;
             border-left: 3px solid #667eea;
-            padding-left: 12px;
-            margin-bottom: 8px;
+            padding-left: 10px;
+            margin-bottom: 6px;
             animation: fadeIn 0.2s ease;
         }
 
         .file-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            padding: 12px 20px;
+            gap: 6px;
+            padding: 10px 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
         }
 
         .file-badge {
             background: rgba(255, 255, 255, 0.15);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 16px;
+            font-size: 0.65rem;
             font-family: monospace;
         }
 
         .action-buttons {
-            padding: 12px 20px;
+            padding: 10px 16px;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
         }
 
         .btn-download, .btn-preview {
@@ -337,106 +336,150 @@
             color: #1a1a2e;
         }
 
-        /* ========== MODAL ========== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-card {
-            background: white;
-            border-radius: 30px;
-            max-width: 500px;
-            width: 90%;
-            padding: 25px;
-            color: #333;
-            animation: fadeIn 0.3s ease;
-        }
-
-        /* ========== RESPONSIVE MOBILE ========== */
+        /* ========== RESPONSIVE MOBILE - CHAT TRÈS GRAND ========== */
         @media (max-width: 768px) {
             .app-container {
                 padding: 12px;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
             }
 
             .agents-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
+                gap: 6px;
             }
 
             .agent-card {
-                padding: 8px 4px;
+                padding: 6px 3px;
             }
 
             .agent-icon {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
 
             .agent-name {
-                font-size: 0.65rem;
-            }
-
-            .agent-role {
-                font-size: 0.55rem;
+                font-size: 0.6rem;
             }
 
             .main-layout {
-                flex-direction: column;
+                flex: 1;
+                gap: 12px;
+                min-height: 0;
             }
 
-            .chat-panel, .mission-panel {
-                height: 480px;
+            /* CHAT TRÈS GRAND */
+            .chat-panel {
+                flex: 3;
+                min-height: 0;
+            }
+
+            .chat-header {
+                padding: 10px 12px;
             }
 
             .chat-header h2 {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .header-btn {
-                padding: 4px 10px;
-                font-size: 0.7rem;
+                padding: 4px 8px;
+                font-size: 0.6rem;
+            }
+
+            .chat-messages {
+                padding: 12px;
+                gap: 10px;
             }
 
             .user-message .bubble, .orvia-message .bubble {
                 max-width: 95%;
-                font-size: 0.85rem;
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .chat-input {
+                padding: 10px 12px;
             }
 
             .chat-input input {
-                padding: 10px 14px;
-                font-size: 0.85rem;
+                padding: 12px 16px;
+                font-size: 0.95rem;
             }
 
             .chat-input button {
-                padding: 10px 16px;
+                padding: 12px 18px;
+                font-size: 0.9rem;
+            }
+
+            /* MISSION PANEL PLUS PETIT */
+            .mission-panel {
+                flex: 1.2;
+                min-height: 180px;
+            }
+
+            .mission-header {
+                padding: 8px 12px;
+            }
+
+            .mission-log {
+                padding: 8px 12px;
+                font-size: 0.65rem;
+            }
+
+            .log-entry {
+                padding: 4px 0;
+                padding-left: 8px;
             }
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 1.8rem;
-            }
-
-            .tagline {
-                font-size: 0.75rem;
-            }
-
             .agents-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .logo {
+                font-size: 1.6rem;
+            }
+
+            .user-message .bubble, .orvia-message .bubble {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+
+            .chat-input input {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .chat-input button {
+                padding: 10px 14px;
+                font-size: 0.85rem;
+            }
         }
 
-        /* ========== SCROLLBAR ========== */
+        /* Pour les très petits écrans */
+        @media (max-width: 380px) {
+            .agent-name {
+                font-size: 0.55rem;
+            }
+
+            .agent-role {
+                display: none;
+            }
+
+            .agent-status {
+                font-size: 0.55rem;
+            }
+
+            .chat-header h2 {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
 
         ::-webkit-scrollbar-track {
@@ -471,7 +514,7 @@
 
         <!-- MAIN LAYOUT -->
         <div class="main-layout">
-            <!-- CHAT PANEL -->
+            <!-- CHAT PANEL - TRÈS GRAND -->
             <div class="chat-panel">
                 <div class="chat-header">
                     <h2>💬 Discussion</h2>
@@ -512,7 +555,6 @@
         let waitingConfirmation = false;
         let pendingIdea = null;
 
-        // ========== UTILS ==========
         function updateAgentStatus(agent, status, type = 'working') {
             const el = document.getElementById(agent + 'Status');
             if (el) {
@@ -537,7 +579,6 @@
             div.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ========== API FUNCTIONS ==========
         async function showMemoryProjects() {
             try {
                 const response = await fetch(API_URL + '/api/projects');
