@@ -11,13 +11,94 @@
             box-sizing: border-box;
         }
 
+        /* ========== THÈMES ========== */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: #0a0a0a;
-            min-height: 100vh;
-            color: #e5e5e5;
+            transition: background-color 0.3s ease, color 0.3s ease;
             overflow: hidden;
             height: 100vh;
+        }
+
+        /* Thème Noir et Or (défaut) */
+        body.theme-dark {
+            background: #0a0a0a;
+            color: #e5e5e5;
+        }
+
+        body.theme-dark .agent-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        body.theme-dark .chat-panel,
+        body.theme-dark .mission-panel {
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        body.theme-dark .chat-input {
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        body.theme-dark .chat-input input {
+            background: rgba(30, 30, 30, 0.95);
+            color: #e5e5e5;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        /* Thème Clair et Or */
+        body.theme-light {
+            background: #f5f5f0;
+            color: #1a1a1a;
+        }
+
+        body.theme-light .agent-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        body.theme-light .chat-panel,
+        body.theme-light .mission-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+        }
+
+        body.theme-light .chat-input {
+            background: rgba(250, 250, 245, 0.98);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        body.theme-light .chat-input input {
+            background: white;
+            color: #1a1a1a;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+        }
+
+        body.theme-light .orvia-message .bubble {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #1a1a1a;
+        }
+
+        body.theme-light .log-entry {
+            border-left-color: #D4AF37;
+        }
+
+        body.theme-light .file-badge {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #B8860B;
+        }
+
+        body.theme-light .header-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #B8860B;
+        }
+
+        body.theme-light .header-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
         }
 
         /* ========== ANIMATIONS ========== */
@@ -57,7 +138,7 @@
             position: relative;
         }
 
-        /* ========== HEADER AVEC LOGO ÉLÉGANT ========== */
+        /* ========== HEADER AVEC LOGO ========== */
         .header {
             text-align: center;
             margin-bottom: 8px;
@@ -65,7 +146,6 @@
             position: relative;
         }
 
-        /* Logo Élégant avec Couronne */
         .logo-container {
             position: relative;
             display: inline-block;
@@ -88,7 +168,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: inline-block;
-            position: relative;
         }
 
         .logo-lightning {
@@ -101,7 +180,7 @@
 
         .tagline {
             font-size: 0.7rem;
-            opacity: 0.7;
+            opacity: 0.8;
             color: #D4AF37;
             margin-top: 8px;
         }
@@ -117,7 +196,27 @@
             color: #D4AF37;
         }
 
-        /* ========== AGENTS - LOGOS EN OR ========== */
+        /* ========== BOUTON THEME ========== */
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #D4AF37;
+            border-radius: 30px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* ========== AGENTS ========== */
         .agents-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -127,18 +226,15 @@
         }
 
         .agent-card {
-            background: rgba(20, 20, 20, 0.9);
             backdrop-filter: blur(8px);
             border-radius: 12px;
             padding: 6px 4px;
             text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .agent-card:hover {
-            border-color: #D4AF37;
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
         }
@@ -164,10 +260,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .agent-role {
-            display: none;
-        }
-
         .agent-status {
             margin-top: 3px;
             font-size: 0.55rem;
@@ -190,12 +282,10 @@
         /* ========== CHAT PANEL ========== */
         .chat-panel {
             flex: 2;
-            background: rgba(15, 15, 15, 0.95);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(212, 175, 55, 0.3);
             overflow: hidden;
         }
 
@@ -224,19 +314,12 @@
         }
 
         .header-btn {
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            border: none;
             padding: 4px 8px;
             border-radius: 16px;
-            color: #D4AF37;
             font-size: 0.6rem;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .header-btn:hover {
-            background: rgba(212, 175, 55, 0.3);
-            border-color: #D4AF37;
         }
 
         /* ========== ZONE MESSAGES ========== */
@@ -270,44 +353,27 @@
         }
 
         .orvia-message .bubble {
-            background: rgba(212, 175, 55, 0.1);
             display: inline-block;
             padding: 8px 14px;
             border-radius: 20px;
             max-width: 85%;
             font-size: 0.85rem;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            color: #e5e5e5;
         }
 
         /* ========== INPUT ========== */
         .chat-input {
             padding: 10px 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
             display: flex;
             gap: 8px;
             flex-shrink: 0;
-            background: rgba(10, 10, 10, 0.95);
         }
 
         .chat-input input {
             flex: 1;
             padding: 10px 14px;
             border-radius: 25px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
             font-size: 0.9rem;
-            background: rgba(30, 30, 30, 0.95);
-            color: #e5e5e5;
             outline: none;
-        }
-
-        .chat-input input:focus {
-            border-color: #D4AF37;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-        }
-
-        .chat-input input::placeholder {
-            color: #888;
         }
 
         .chat-input button {
@@ -330,12 +396,10 @@
         /* ========== MISSION PANEL ========== */
         .mission-panel {
             flex: 1.2;
-            background: rgba(15, 15, 15, 0.95);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(212, 175, 55, 0.3);
             overflow: hidden;
         }
 
@@ -379,13 +443,10 @@
         }
 
         .file-badge {
-            background: rgba(212, 175, 55, 0.15);
             padding: 2px 6px;
             border-radius: 12px;
             font-size: 0.55rem;
             font-family: monospace;
-            color: #D4AF37;
-            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .action-buttons {
@@ -429,56 +490,28 @@
             .app-container {
                 padding: 6px 10px;
             }
-
             .agents-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 5px;
             }
-
             .agent-icon {
                 font-size: 1.3rem;
             }
-
             .main-layout {
                 flex-direction: column;
                 gap: 8px;
             }
-
-            .chat-panel {
-                flex: 3;
-            }
-
-            .mission-panel {
-                flex: 1.2;
-                min-height: 140px;
-            }
-
             .crown {
                 top: -22px;
                 font-size: 1.3rem;
             }
-
             .logo {
                 font-size: 1.4rem;
             }
-
-            .logo-lightning {
-                font-size: 1rem;
-            }
-
-            .user-message .bubble, .orvia-message .bubble {
-                max-width: 90%;
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-
-            .chat-input input {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-
-            .chat-input button {
-                padding: 8px 14px;
+            .theme-toggle {
+                top: 5px;
+                right: 10px;
+                padding: 4px 8px;
                 font-size: 0.8rem;
             }
         }
@@ -487,44 +520,33 @@
             .agents-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
             .crown {
                 top: -20px;
                 font-size: 1.2rem;
             }
-
             .logo {
                 font-size: 1.2rem;
             }
-
-            .logo-lightning {
-                font-size: 0.9rem;
-            }
-
-            .agent-icon {
-                font-size: 1.2rem;
-            }
         }
 
-        /* Scrollbar dorée */
         ::-webkit-scrollbar {
             width: 3px;
         }
-
         ::-webkit-scrollbar-track {
             background: rgba(212, 175, 55, 0.1);
             border-radius: 10px;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #D4AF37;
             border-radius: 10px;
         }
     </style>
 </head>
-<body>
+<body class="theme-dark">
     <div class="app-container">
-        <!-- HEADER AVEC LOGO ÉLÉGANT (COURONNE) -->
+        <!-- BOUTON THEME -->
+        <div class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</div>
+
         <div class="header">
             <div class="logo-container">
                 <div class="crown">👑</div>
@@ -536,43 +558,16 @@
             <div class="learning-badge" id="learningBadge">🧠 Apprentissage</div>
         </div>
 
-        <!-- AGENTS AVEC LOGOS EN OR -->
         <div class="agents-grid">
-            <div class="agent-card">
-                <div class="agent-icon">🔮</div>
-                <div class="agent-name">VISION</div>
-                <div class="agent-status online" id="visionStatus">Prêt</div>
-            </div>
-            <div class="agent-card">
-                <div class="agent-icon">✨</div>
-                <div class="agent-name">ARTISAN</div>
-                <div class="agent-status online" id="artisanStatus">Prêt</div>
-            </div>
-            <div class="agent-card">
-                <div class="agent-icon">🛡️</div>
-                <div class="agent-name">SENTINEL</div>
-                <div class="agent-status online" id="sentinelStatus">Prêt</div>
-            </div>
-            <div class="agent-card">
-                <div class="agent-icon">⚖️</div>
-                <div class="agent-name">JUDGE</div>
-                <div class="agent-status online" id="judgeStatus">Prêt</div>
-            </div>
-            <div class="agent-card">
-                <div class="agent-icon">🎨</div>
-                <div class="agent-name">DESIGNER</div>
-                <div class="agent-status online" id="designerStatus">Prêt</div>
-            </div>
-            <div class="agent-card">
-                <div class="agent-icon">🧠</div>
-                <div class="agent-name">MÉMOIRE</div>
-                <div class="agent-status online" id="memoryStatus">Actif</div>
-            </div>
+            <div class="agent-card"><div class="agent-icon">🔮</div><div class="agent-name">VISION</div><div class="agent-status online" id="visionStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">✨</div><div class="agent-name">ARTISAN</div><div class="agent-status online" id="artisanStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">🛡️</div><div class="agent-name">SENTINEL</div><div class="agent-status online" id="sentinelStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">⚖️</div><div class="agent-name">JUDGE</div><div class="agent-status online" id="judgeStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">🎨</div><div class="agent-name">DESIGNER</div><div class="agent-status online" id="designerStatus">Prêt</div></div>
+            <div class="agent-card"><div class="agent-icon">🧠</div><div class="agent-name">MÉMOIRE</div><div class="agent-status online" id="memoryStatus">Actif</div></div>
         </div>
 
-        <!-- MAIN LAYOUT -->
         <div class="main-layout">
-            <!-- CHAT PANEL -->
             <div class="chat-panel">
                 <div class="chat-header">
                     <h2>💬 Discussion</h2>
@@ -583,7 +578,7 @@
                     </div>
                 </div>
                 <div class="chat-messages" id="chatMessages">
-                    <div class="message orvia-message"><div class="bubble">👑 Bonjour ! Je suis ORVIA, ton assistant IA. Dis-moi ce que tu veux créer !<br><br>💡 /generate [idée] - Créer une application<br>🧠 Clique sur MÉMOIRE pour voir tes projets<br>🎨 Clique sur TEMPLATES pour des modèles</div></div>
+                    <div class="message orvia-message"><div class="bubble">👑 Bonjour ! Je suis ORVIA. Dis-moi ce que tu veux créer !<br><br>💡 /generate [idée] - Créer une application<br>🧠 Clique sur MÉMOIRE pour voir tes projets<br>🎨 Clique sur TEMPLATES pour des modèles</div></div>
                 </div>
                 <div class="chat-input">
                     <input type="text" id="messageInput" placeholder="Parle avec ORVIA..." onkeypress="if(event.key==='Enter') sendMessage()">
@@ -591,11 +586,8 @@
                 </div>
             </div>
 
-            <!-- MISSION PANEL -->
             <div class="mission-panel">
-                <div class="mission-header">
-                    <h2>🏆 Mission</h2>
-                </div>
+                <div class="mission-header"><h2>🏆 Mission</h2></div>
                 <div id="missionLog" class="mission-log"></div>
                 <div id="fileList" class="file-list"></div>
                 <div class="action-buttons" id="actionButtons" style="display: none;">
@@ -612,6 +604,42 @@
         let waitingConfirmation = false;
         let pendingIdea = null;
 
+        // ========== GESTION DU THÈME ==========
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.classList.contains('theme-dark')) {
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-light');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('orvia_theme', 'light');
+            } else {
+                body.classList.remove('theme-light');
+                body.classList.add('theme-dark');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('orvia_theme', 'dark');
+            }
+        }
+
+        // Charger le thème sauvegardé
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('orvia_theme');
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (savedTheme === 'light') {
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-light');
+                themeToggle.textContent = '🌙';
+            } else {
+                body.classList.remove('theme-light');
+                body.classList.add('theme-dark');
+                themeToggle.textContent = '☀️';
+            }
+        }
+
+        // ========== FONCTIONS PRINCIPALES ==========
         function updateAgentStatus(agent, status, type = 'working') {
             const el = document.getElementById(agent + 'Status');
             if (el) {
@@ -773,6 +801,9 @@
                 addChatMessage('❌ Erreur de connexion', false);
             }
         }
+
+        // Charger le thème au démarrage
+        loadTheme();
     </script>
 </body>
 </html>
